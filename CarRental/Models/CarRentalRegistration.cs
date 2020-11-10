@@ -14,56 +14,60 @@ namespace CarRental.Models
 
         public long RegistrNum { get; set; }
 
-        //public long CustomerSocSecNum { get; set; }
+        public long CustomerSocSecNum { get; set; }
 
-        //[Flags]
-        //public enum VehicleCategory
+        [Flags]
+        public enum VehicleCategory
+        {
+            SmallCar = 1,
+            HatchBack = 2,
+            Truck = 3
+        }
+        public VehicleCategory VehicleCat { get; set; }
+
+        public DateTime DateOfDeli { get; set; }
+
+        //public long KmAtDelivery
         //{
-        //    SmallCar = 1,
-        //    HatchBack = 2,
-        //    Truck = 3
-        //}
-        //public VehicleCategory VehicleCat { get; set; }
-
-        //public DateTime DateOfDeli { get; set; }
-     
-        //public long KmAtDelivery {
         //    get { return KmAtDelivery; }
-        //    set { KmAtDelivery = value;
-        //          KmAtReturn = value;
+        //    set
+        //    {
+        //        KmAtDelivery = value;
+        //        KmAtReturn = value;
         //    }
 
         //}
-   
-        //public DateTime DateOfReturn { get; set; }
+
+        public DateTime DateOfReturn { get; set; }
 
         //public long KmAtReturn { get; set; }
 
         //public double Price { get; set; }
 
-        //public bool IsReturned {
+        //public bool IsReturned
+        //{
         //    get { return IsReturned; }
 
-        //    set 
-        //    { 
+        //    set
+        //    {
         //        if (value == true)
         //        {
         //            Price = CalculatePrice();
         //            IsReturned = true;
         //        }
-        //    } 
+        //    }
         //}
 
-        //public CarRentalRegistration()
-        //{
-        //    DateOfDeli = DateTime.Now;
-        //    DateOfReturn = DateOfDeli;
-        //    IsReturned = false;
-        //}
+        public CarRentalRegistration()
+        {
+            DateOfDeli = DateTime.Now;
+            DateOfReturn = DateOfDeli;
+            //IsReturned = false;
+        }
 
         private double baseHourRent = 20;
         private double baseKmPrice = 2;
-        private double hatchbackCoeffOfDays =1.3;
+        private double hatchbackCoeffOfDays = 1.3;
         private double truckCoefOfDays = 1.5;
         private double truckCoefOfKm = 1.5;
         //public double CalculatePrice()
@@ -76,11 +80,11 @@ namespace CarRental.Models
         //        return baseHourRent * NumberOfDays() * truckCoefOfDays + baseKmPrice * NumberOfKm() * truckCoefOfKm;
         //}
 
-        //private int NumberOfDays()
-        //{
-        //    TimeSpan difference = DateOfReturn - DateOfDeli;
-        //    return difference.Days;
-        //}
+        private int NumberOfDays()
+        {
+            TimeSpan difference = DateOfReturn - DateOfDeli;
+            return difference.Days;
+        }
 
         //private long NumberOfKm()
         //{
