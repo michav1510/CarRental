@@ -27,12 +27,12 @@ namespace CarRental.Models
 
         public DateTime DateOfDeli { get; set; }
 
-        //public long KmAtDelivery
+        public long kmAtDelivery { get; set; }
         //{
-        //    get { return KmAtDelivery; }
+        //    get { return kmAtDelivery; }
         //    set
         //    {
-        //        KmAtDelivery = value;
+        //        kmAtDelivery = value;
         //        KmAtReturn = value;
         //    }
 
@@ -40,9 +40,9 @@ namespace CarRental.Models
 
         public DateTime DateOfReturn { get; set; }
 
-        //public long KmAtReturn { get; set; }
+        public long KmAtReturn { get; set; }
 
-        //public double Price { get; set; }
+        public double Price { get; set; }
 
         //public bool IsReturned
         //{
