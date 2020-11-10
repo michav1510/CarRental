@@ -7,7 +7,7 @@ namespace CarRental.Models
     public class CarRentalRegistration
     {
         [Key]
-        public long ReservNum { get; set; }
+        public Guid Id { get; set; }
 
         public long RegistrNum { get; set; }
 
@@ -45,7 +45,7 @@ namespace CarRental.Models
 
         public CarRentalRegistration(CarRentalRegistration carrentalregistration)
         {
-            ReservNum = carrentalregistration.ReservNum;
+            Id = carrentalregistration.Id;
             RegistrNum = carrentalregistration.RegistrNum;
             CustomerSocSecNum = carrentalregistration.CustomerSocSecNum;
             VehicleCat = carrentalregistration.VehicleCat;

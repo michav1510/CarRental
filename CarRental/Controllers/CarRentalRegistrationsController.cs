@@ -35,7 +35,7 @@ namespace CarRental.Controllers
 
         // GET: api/CarRentalRegistrations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CarRentalRegistration>> GetCarRentalRegistration(long id)
+        public async Task<ActionResult<CarRentalRegistration>> GetCarRentalRegistration(Guid id)
         {
             var carRentalRegistration = await _context.CarRentalRegistrations.FindAsync(id);
 
@@ -51,10 +51,10 @@ namespace CarRental.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCarRentalRegistration(long id, CarRentalReturn carRentalReturn)
+        public async Task<IActionResult> PutCarRentalRegistration(Guid id, CarRentalReturn carRentalReturn)
         {
             
-            if (id != carRentalReturn.ReservNum)
+            if (id != carRentalReturn.Id)
             {
                 return BadRequest(error_id_different_in_url_and_in_json);
             }
@@ -102,8 +102,8 @@ namespace CarRental.Controllers
             _context.CarRentalRegistrations.Add(carRentalRegistration);
             await _context.SaveChangesAsync();
 
-            //return CreatedAtAction("GetCarRentalRegistration", new { id = carRentalRegistration.ReservNum }, carRentalRegistration);
-            return CreatedAtAction(nameof(GetCarRentalRegistration), new { id = carRentalRegistration.ReservNum }, carRentalRegistration);
+            //return CreatedAtAction("GetCarRentalRegistration", new { id = carRentalRegistration.Id }, carRentalRegistration);
+            return CreatedAtAction(nameof(GetCarRentalRegistration), new { id = carRentalRegistration.Id }, carRentalRegistration);
 
         }
 
@@ -123,9 +123,9 @@ namespace CarRental.Controllers
             return carRentalRegistration;
         }
 
-        private bool CarRentalRegistrationExists(long id)
+        private bool CarRentalRegistrationExists(Guid id)
         {
-            return _context.CarRentalRegistrations.Any(e => e.ReservNum == id);
+            return _context.CarRentalRegistrations.Any(e => e.Id == id);
         }
     }
 }

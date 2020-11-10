@@ -9,7 +9,7 @@ namespace CarRental.Models
     public class CarRentalReturn
     {
         [Key]
-        public long ReservNum{get ; set;}
+        public Guid Id{get ; set;}
         public long KmAtReturn{ get; set;}
         public DateTime DateOfReturn{get; set;}
 
