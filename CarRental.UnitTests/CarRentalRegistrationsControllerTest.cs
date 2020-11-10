@@ -11,7 +11,7 @@ namespace CarRental.UnitTests
         public CarRentalRegistrationsControllerTest()
         {
             _service = new CarRentalRegistrationsFake();
-            _controller = new CarRentalRegistrationsController(new CarRentalContext());
+            _controller = new CarRentalRegistrationsController();
         }
 
         [Fact]
