@@ -27,42 +27,23 @@ namespace CarRental.Models
 
         public DateTime DateOfDeli { get; set; }
 
-        public long kmAtDelivery { get; set; }
-        //{
-        //    get { return kmAtDelivery; }
-        //    set
-        //    {
-        //        kmAtDelivery = value;
-        //        KmAtReturn = value;
-        //    }
-
-        //}
-
+        public long KmAtDelivery { get; set; }
+        
         public DateTime DateOfReturn { get; set; }
 
         public long KmAtReturn { get; set; }
 
         public double Price { get; set; }
 
-        //public bool IsReturned
-        //{
-        //    get { return IsReturned; }
-
-        //    set
-        //    {
-        //        if (value == true)
-        //        {
-        //            Price = CalculatePrice();
-        //            IsReturned = true;
-        //        }
-        //    }
-        //}
-
+        public bool IsReturned { get; set; }
+        
         public CarRentalRegistration()
         {
             DateOfDeli = DateTime.Now;
             DateOfReturn = DateOfDeli;
-            //IsReturned = false;
+            Price = 0;
+            IsReturned = false;
+            KmAtReturn = KmAtDelivery;
         }
 
         private double baseHourRent = 20;
@@ -70,15 +51,15 @@ namespace CarRental.Models
         private double hatchbackCoeffOfDays = 1.3;
         private double truckCoefOfDays = 1.5;
         private double truckCoefOfKm = 1.5;
-        //public double CalculatePrice()
-        //{
-        //    if (VehicleCat == VehicleCategory.SmallCar)
-        //        return baseHourRent * NumberOfDays();
-        //    else if (VehicleCat == VehicleCategory.HatchBack)
-        //        return baseHourRent * NumberOfDays() * hatchbackCoeffOfDays + baseKmPrice * NumberOfKm();
-        //    else
-        //        return baseHourRent * NumberOfDays() * truckCoefOfDays + baseKmPrice * NumberOfKm() * truckCoefOfKm;
-        //}
+        public double CalculatePrice()
+        {
+            if (VehicleCat == VehicleCategory.SmallCar)
+                return baseHourRent * NumberOfDays();
+            else if (VehicleCat == VehicleCategory.HatchBack)
+                return baseHourRent * NumberOfDays() * hatchbackCoeffOfDays + baseKmPrice * NumberOfKm();
+            else
+                return baseHourRent * NumberOfDays() * truckCoefOfDays + baseKmPrice * NumberOfKm() * truckCoefOfKm;
+        }
 
         private int NumberOfDays()
         {
@@ -86,9 +67,9 @@ namespace CarRental.Models
             return difference.Days;
         }
 
-        //private long NumberOfKm()
-        //{
-        //    return KmAtReturn - KmAtDelivery;
-        //}
+        private long NumberOfKm()
+        {
+            return KmAtReturn - KmAtDelivery;
+        }
     }
 }
