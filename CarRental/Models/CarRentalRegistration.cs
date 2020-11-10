@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarRental.Models
@@ -44,6 +41,20 @@ namespace CarRental.Models
             Price = 0;
             IsReturned = false;
             KmAtReturn = KmAtDelivery;
+        }
+
+        public CarRentalRegistration(CarRentalRegistration carrentalregistration)
+        {
+            ReservNum = carrentalregistration.ReservNum;
+            RegistrNum = carrentalregistration.RegistrNum;
+            CustomerSocSecNum = carrentalregistration.CustomerSocSecNum;
+            VehicleCat = carrentalregistration.VehicleCat;
+            DateOfDeli = carrentalregistration.DateOfDeli;
+            KmAtDelivery = carrentalregistration.KmAtDelivery;
+            DateOfReturn = carrentalregistration.DateOfReturn;
+            KmAtReturn = carrentalregistration.KmAtReturn;
+            Price = carrentalregistration.Price;
+            IsReturned = carrentalregistration.IsReturned;
         }
 
         private double baseHourRent = 20;

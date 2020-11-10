@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarRental.Models;
+using System.Drawing.Printing;
 
 namespace CarRental.Controllers
 {
@@ -51,6 +52,8 @@ namespace CarRental.Controllers
             {
                 return BadRequest();
             }
+            carRentalRegistration.KmAtDelivery = 1;
+            //CarRentalRegistration updcarRentalRegistration = new CarRentalRegistration(carRentalRegistration); 
 
             _context.Entry(carRentalRegistration).State = EntityState.Modified;
 
