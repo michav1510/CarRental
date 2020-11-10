@@ -11,8 +11,13 @@ namespace CarRental.Models
         [Key]
         public long ReservNum{get ; set;}
         public long KmAtReturn{ get; set;}
-        public long DateOfReturn{get; set;}
+        public DateTime DateOfReturn{get; set;}
 
+
+        //public CarRentalReturn()
+        //{
+        //    DateOfReturn = DateTime.Now;
+        //}
 
     }
 }

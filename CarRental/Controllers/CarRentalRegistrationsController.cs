@@ -46,14 +46,26 @@ namespace CarRental.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCarRentalRegistration(long id, CarRentalRegistration carRentalRegistration)
+        public async Task<IActionResult> PutCarRentalRegistration(long id, CarRentalReturn carRentalReturn)
         {
-            if (id != carRentalRegistration.ReservNum)
+            
+            if (id != carRentalReturn.ReservNum)
             {
                 return BadRequest();
             }
-            carRentalRegistration.KmAtDelivery = 1;
-            //CarRentalRegistration updcarRentalRegistration = new CarRentalRegistration(carRentalRegistration); 
+
+            var carRentalRegistration = await _context.CarRentalRegistrations.FindAsync(id);
+            if (carRentalRegistration == null)
+            {
+                return NotFound();
+            }
+            if (carRentalRegistration.IsReturned == true) return BadRequest(); // edo tha eprepe na iparxei ena minima isos
+            if (carRentalReturn.KmAtReturn < carRentalRegistration.KmAtDelivery) return BadRequest(); // edo tha eprepe na iparxei ena minima isos
+            if (DateTime.Compare(carRentalReturn.DateOfReturn, carRentalRegistration.DateOfDeli) < 0) return BadRequest(); // edo tha eprepe na iparxei ena minima isos
+            carRentalRegistration.KmAtReturn = carRentalReturn.KmAtReturn;
+            carRentalRegistration.DateOfReturn = carRentalReturn.DateOfReturn;
+            carRentalRegistration.Price = carRentalRegistration.CalculatePrice();
+            carRentalRegistration.IsReturned = true; 
 
             _context.Entry(carRentalRegistration).State = EntityState.Modified;
 

@@ -22,7 +22,7 @@ namespace CarRental.Models
         }
         public VehicleCategory VehicleCat { get; set; }
 
-        public DateTime DateOfDeli { get; set; }
+        public DateTime DateOfDeli { get; set; } 
 
         public long KmAtDelivery { get; set; }
         
