@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using CarRental.Models;
 
-namespace CarRental.UnitTests
+namespace CarRental.Models
 {
-    interface ICarRentalRegistrations
+    public interface ICarRentalRegistrationsService
     {
         IEnumerable<CarRentalRegistration> GetAllItems();
         CarRentalRegistration Add(CarRentalRegistration newItem);

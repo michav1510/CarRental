@@ -8,7 +8,6 @@ namespace CarRental.Models
     {
         [Key]
         public Guid Id { get; set; }
-
         public long RegistrNum { get; set; }
 
         public long CustomerSocSecNum { get; set; }

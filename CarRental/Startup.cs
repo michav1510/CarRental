@@ -22,6 +22,7 @@ namespace CarRental
         {
             services.AddDbContext<CarRentalContext>(opt =>opt.UseInMemoryDatabase("TodoList"));
             services.AddControllers();
+            services.AddScoped<ICarRentalRegistrationsService, CarRentalRegistrationsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
