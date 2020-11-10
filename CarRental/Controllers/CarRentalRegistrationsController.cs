@@ -16,6 +16,11 @@ namespace CarRental.Controllers
     {
         private readonly CarRentalContext _context;
 
+        public readonly string error_for_previously_returned_car = "The car has been returned before!";
+        public readonly string error_for_kmatreturn_smaller_than_before = "The kilometers at return can't be smaller than delivery time!";
+        public readonly string error_datetime_at_delivery_smaller_than_before = "The date of the return can't be previous than the delivery date!";
+        public readonly string error_id_different_in_url_and_in_json = "The reservation number implicit given in url is different than the one in the json";
+
         public CarRentalRegistrationsController(CarRentalContext context)
         {
             _context = context;
@@ -51,7 +56,7 @@ namespace CarRental.Controllers
             
             if (id != carRentalReturn.ReservNum)
             {
-                return BadRequest();
+                return BadRequest(error_id_different_in_url_and_in_json);
             }
 
             var carRentalRegistration = await _context.CarRentalRegistrations.FindAsync(id);
@@ -59,9 +64,9 @@ namespace CarRental.Controllers
             {
                 return NotFound();
             }
-            if (carRentalRegistration.IsReturned == true) return BadRequest(); // edo tha eprepe na iparxei ena minima isos
-            if (carRentalReturn.KmAtReturn < carRentalRegistration.KmAtDelivery) return BadRequest(); // edo tha eprepe na iparxei ena minima isos
-            if (DateTime.Compare(carRentalReturn.DateOfReturn, carRentalRegistration.DateOfDeli) < 0) return BadRequest(); // edo tha eprepe na iparxei ena minima isos
+            if (carRentalRegistration.IsReturned == true) return BadRequest(error_for_previously_returned_car); 
+            if (carRentalReturn.KmAtReturn < carRentalRegistration.KmAtDelivery) return BadRequest(error_for_kmatreturn_smaller_than_before); 
+            if (DateTime.Compare(carRentalReturn.DateOfReturn, carRentalRegistration.DateOfDeli) < 0) return BadRequest(error_datetime_at_delivery_smaller_than_before); 
             carRentalRegistration.KmAtReturn = carRentalReturn.KmAtReturn;
             carRentalRegistration.DateOfReturn = carRentalReturn.DateOfReturn;
             carRentalRegistration.Price = carRentalRegistration.CalculatePrice();
