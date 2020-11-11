@@ -95,6 +95,7 @@ namespace CarRental.UnitTests
         private static bool isreturned6 = false;
 
         //seventh object, inside the db from start
+
         private static Guid id7 = new Guid("32706c6a-6b87-666c-bfb6-61971b6d18ad");
         private static long customersocsecnum7 = 6671100;
         private static long registrnum7 = 160899001;
@@ -105,6 +106,58 @@ namespace CarRental.UnitTests
         private static DateTime dateofreturn7 = DateTime.Now;
         private static double price7 = 0;
         private static bool isreturned7 = false;
+
+        //eighth object, inside the db from start
+
+        private static Guid id8 = new Guid("85806c6a-6b88-666c-bfb6-61981b6d18ad");
+        private static long customersocsecnum8 = 6681100;
+        private static long registrnum8 = 160899001;
+        private static DateTime dateofdeli8 = DateTime.Now;
+        private static long kmatdelivery8 = 160000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat8 = CarRentalRegistration.VehicleCategory.SmallCar;
+        private static long kmatreturn8 = 159999;
+        private static DateTime dateofreturn8 = DateTime.Now.AddDays(2);
+        private static double price8 = 40;
+        private static bool isreturned8 = true;
+
+        //nineth object, inside the db from start
+
+        private static Guid id9 = new Guid("12806c6a-6b88-666c-bfb6-61981b6d18ad");
+        private static long customersocsecnum9 = 6691100;
+        private static long registrnum9 = 160999001;
+        private static DateTime dateofdeli9 = DateTime.Now;
+        private static long kmatdelivery9 = 160000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat9 = CarRentalRegistration.VehicleCategory.SmallCar;
+        private static long kmatreturn9 = 160000;
+        private static DateTime dateofreturn9 = DateTime.Now;
+        private static double price9 = 0;
+        private static bool isreturned9 = false;
+
+        //tenth object, inside the db from start 
+
+        private static Guid id10 = new Guid("29806c6a-6b88-666c-bfb6-61981b6d18ad");
+        private static long customersocsecnum10 = 66101100;
+        private static long registrnum10 = 160101010001;
+        private static DateTime dateofdeli10 = DateTime.Now;
+        private static long kmatdelivery10 = 160000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat10 = CarRentalRegistration.VehicleCategory.SmallCar;
+        private static long kmatreturn10 = 160000;
+        private static DateTime dateofreturn10 = DateTime.Now;
+        private static double price10 = 0;
+        private static bool isreturned10 = false;
+
+        //eleventh object, inside the db from start
+
+        private static Guid id11 = new Guid("00806c6a-6b88-666c-bfb6-61981b6d18ad");
+        private static long customersocsecnum11 = 66111110;
+        private static long registrnum11 = 160111111001;
+        private static DateTime dateofdeli11 = DateTime.Now;
+        private static long kmatdelivery11 = 160000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat11 = CarRentalRegistration.VehicleCategory.SmallCar;
+        private static long kmatreturn11 = 160000;
+        private static DateTime dateofreturn11 = DateTime.Now;
+        private static double price11 = 0;
+        private static bool isreturned11 = false;
 
 
         static CarRentalRegistrationsControllerTest()
@@ -197,6 +250,63 @@ namespace CarRental.UnitTests
                 IsReturned = isreturned7
             });
 
+            context.CarRentalRegistrations.Add(new CarRentalRegistration
+            {
+                Id = id8,
+                CustomerSocSecNum = customersocsecnum8,
+                RegistrNum = registrnum8,
+                DateOfDeli = dateofdeli8,
+                KmAtDelivery = kmatdelivery8,
+                VehicleCat = vehiclecat8,
+                KmAtReturn = kmatreturn8,
+                DateOfReturn = dateofreturn8,
+                Price = price8,
+                IsReturned = isreturned8
+            });
+
+            context.CarRentalRegistrations.Add(new CarRentalRegistration
+            {
+                Id = id9,
+                CustomerSocSecNum = customersocsecnum9,
+                RegistrNum = registrnum9,
+                DateOfDeli = dateofdeli9,
+                KmAtDelivery = kmatdelivery9,
+                VehicleCat = vehiclecat9,
+                KmAtReturn = kmatreturn9,
+                DateOfReturn = dateofreturn9,
+                Price = price9,
+                IsReturned = isreturned9
+            });
+
+            context.CarRentalRegistrations.Add(new CarRentalRegistration
+            {
+                Id = id10,
+                CustomerSocSecNum = customersocsecnum10,
+                RegistrNum = registrnum10,
+                DateOfDeli = dateofdeli10,
+                KmAtDelivery = kmatdelivery10,
+                VehicleCat = vehiclecat10,
+                KmAtReturn = kmatreturn10,
+                DateOfReturn = dateofreturn10,
+                Price = price10,
+                IsReturned = isreturned10
+            });
+
+            context.CarRentalRegistrations.Add(new CarRentalRegistration
+            {
+                Id = id11,
+                CustomerSocSecNum = customersocsecnum11,
+                RegistrNum = registrnum11,
+                DateOfDeli = dateofdeli11,
+                KmAtDelivery = kmatdelivery11,
+                VehicleCat = vehiclecat11,
+                KmAtReturn = kmatreturn11,
+                DateOfReturn = dateofreturn11,
+                Price = price11,
+                IsReturned = isreturned11
+            });
+
+
             context.SaveChanges();
         }
       
@@ -226,7 +336,7 @@ namespace CarRental.UnitTests
             var result = await controller.GetCarRentalRegistrations();
 
             var list = result.Value.ToList();
-            Assert.Equal(6, list.Count);
+            Assert.Equal(10, list.Count);
 
             Assert.Equal(list[0].Id, id1);
             Assert.Equal(list[0].CustomerSocSecNum, customersocsecnum1);
@@ -405,7 +515,96 @@ namespace CarRental.UnitTests
             Assert.True(result.Value.IsReturned);
         }
 
+        //The below test checks if the BadRequest with the correct message returned when you are trying to make a PUT
+        // request on an Id that have previously returned. This is the scenario when a car has returned and you can't 
+        //re-return it.
+        [Fact]
+        public async void CheckPUTInAlreadyReturnedCar()
+        {
+            CarRentalReturn carreturn = new CarRentalReturn
+            {
+                Id = id8,
+                KmAtReturn = kmatdelivery8 + 350,
+                DateOfReturn = dateofdeli7.AddDays(2)
+            };
 
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            var result = await controller.PutCarRentalRegistration(id8, carreturn);
+
+            BadRequestObjectResult resultitem = (result as BadRequestObjectResult) ;
+        
+            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(resultitem.Value, CarRentalRegistrationsController.error_for_previously_returned_car);
+        }
+
+
+
+        //The below test will check if the scenario when the kilometer position at the return is lower 
+        // than at the delivery. This is BadRequest.
+        [Fact]
+        public async void CheckPUTWithLowerKilometerInReturn()
+        {
+            CarRentalReturn carreturn = new CarRentalReturn
+            {
+                Id = id9,
+                KmAtReturn = kmatdelivery9 -1,
+                DateOfReturn = dateofdeli8.AddDays(2)
+            };
+
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            var result = await controller.PutCarRentalRegistration(id9, carreturn);
+
+            BadRequestObjectResult resultitem = (result as BadRequestObjectResult);
+
+            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(resultitem.Value, CarRentalRegistrationsController.error_for_kmatreturn_smaller_than_before);
+
+        }
+
+
+        //The below test is to prevent someone to enter date of return before the date of delivery.
+        [Fact]
+        public async void CheckPUTWithDateOfReturnPreviousThanDelivery()
+        {
+            CarRentalReturn carreturn = new CarRentalReturn
+            {
+                Id = id10,
+                KmAtReturn = kmatdelivery10 + 10,
+                DateOfReturn = dateofdeli10.AddDays(-1)
+            };
+
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            var result = await controller.PutCarRentalRegistration(id10, carreturn);
+
+            BadRequestObjectResult resultitem = (result as BadRequestObjectResult);
+
+            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(resultitem.Value, CarRentalRegistrationsController.error_datetime_at_delivery_smaller_than_before);
+
+        }
+
+
+        //The following test is to check if id of the url and the id of the json are the same. This prevents to 
+        // change the id of a car rent registration. 
+        [Fact]
+        public async void CheckPUTIdOfUrlAndJsonNotTheSame()
+        {
+            CarRentalReturn carreturn = new CarRentalReturn
+            {
+                Id = id9,
+                KmAtReturn = kmatdelivery11 + 200,
+                DateOfReturn = dateofdeli11.AddDays(2)
+            };
+
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            var result = await controller.PutCarRentalRegistration(id11, carreturn);
+
+            BadRequestObjectResult resultitem = (result as BadRequestObjectResult);
+
+            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(resultitem.Value, CarRentalRegistrationsController.error_id_different_in_url_and_in_json);
+
+        }
     }
 
 }

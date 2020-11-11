@@ -16,10 +16,10 @@ namespace CarRental.Controllers
     {
         private readonly CarRentalContext _context;
 
-        public readonly string error_for_previously_returned_car = "The car has been returned before!";
-        public readonly string error_for_kmatreturn_smaller_than_before = "The kilometers at return can't be smaller than delivery time!";
-        public readonly string error_datetime_at_delivery_smaller_than_before = "The date of the return can't be previous than the delivery date!";
-        public readonly string error_id_different_in_url_and_in_json = "The reservation number implicit given in url is different than the one in the json";
+        public static readonly string error_for_previously_returned_car = "The car has been returned before!";
+        public static readonly string error_for_kmatreturn_smaller_than_before = "The kilometers at return can't be smaller than delivery time!";
+        public static readonly string error_datetime_at_delivery_smaller_than_before = "The date of the return can't be previous than the delivery date!";
+        public static readonly string error_id_different_in_url_and_in_json = "The reservation number implicit given in url is different than the one in the json";
 
         public CarRentalRegistrationsController(CarRentalContext context)
         {
