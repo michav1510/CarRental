@@ -15,7 +15,9 @@ namespace CarRental.UnitTests
     {
         private static DbContextOptions<CarRentalContext> options;
         private static CarRentalContext context;
-        //first object
+
+        //first object, inside the db from start
+
         private static Guid id1= new Guid("ab2bd817-98cd-4cf3-a80a-53ea0cd9c200");
         private static long customersocsecnum1 = 151100;
         private static long registrnum1 = 150899001;
@@ -26,9 +28,11 @@ namespace CarRental.UnitTests
         private static DateTime dateofreturn1 = DateTime.Now;
         private static double price1 = 100;
         private static bool isreturned1 = true;
-        //second object
+
+        //second object, inside the db from start
+
         private static Guid id2 = new Guid("815accac-fd5b-478a-a9d6-f171a2f6ae7f");
-        private static long customersocsecnum2 = 151100;
+        private static long customersocsecnum2 = 001120;
         private static long registrnum2 = 150899001;
         private static DateTime dateofdeli2 = DateTime.Now;
         private static long kmatdelivery2 = 150000;
@@ -37,9 +41,11 @@ namespace CarRental.UnitTests
         private static DateTime dateofreturn2 = DateTime.Now;
         private static double price2 = 100;
         private static bool isreturned2 = true;
-        //third object
+
+        //third object, inside the db from start
+
         private static Guid id3 = new Guid("33704c4a-5b87-464c-bfb6-51971b4d18ad");
-        private static long customersocsecnum3 = 151100;
+        private static long customersocsecnum3 = 3571100;
         private static long registrnum3 = 150899001;
         private static DateTime dateofdeli3 = DateTime.Now;
         private static long kmatdelivery3 = 150000;
@@ -48,6 +54,32 @@ namespace CarRental.UnitTests
         private static DateTime dateofreturn3 = DateTime.Now;
         private static double price3 = 100;
         private static bool isreturned3 = true;
+
+        //fourth object, post inside the db 
+
+        //private static Guid id4 = new Guid("65704c4a-5b87-464c-bfb6-51971b4d18ad");
+        private static long customersocsecnum4 = 151100;
+        private static long registrnum4 = 150899001;
+        //private static DateTime dateofdeli4 = DateTime.Now;
+        private static long kmatdelivery4 = 150000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat4 = CarRentalRegistration.VehicleCategory.SmallCar;
+        //private static long kmatreturn4 = 150200;
+        //private static DateTime dateofreturn4 = DateTime.Now;
+        //private static double price4 = 100;
+        //private static bool isreturned4 = true;
+
+        //fifth object, post inside the db
+
+        private static Guid id5 = new Guid("55705c5a-5b87-565c-bfb6-51971b5d18ad");
+        private static long customersocsecnum5 = 5571100;
+        private static long registrnum5 = 150899001;
+        private static DateTime dateofdeli5 = DateTime.Now;
+        private static long kmatdelivery5 = 150000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat5 = CarRentalRegistration.VehicleCategory.SmallCar;
+        private static long kmatreturn5 = 150200;
+        private static DateTime dateofreturn5 = DateTime.Now;
+        private static double price5 = 100;
+        private static bool isreturned5 = true;
 
         static CarRentalRegistrationsControllerTest()
         {
@@ -96,6 +128,7 @@ namespace CarRental.UnitTests
                 Price = price3,
                 IsReturned = isreturned3
             });
+          
             context.SaveChanges();
         }
       
@@ -156,6 +189,57 @@ namespace CarRental.UnitTests
             Assert.Equal(list[2].DateOfReturn, dateofreturn3);
             Assert.Equal(list[2].Price, price3);
             Assert.Equal(list[2].IsReturned, isreturned3);
+
+        }
+
+        // Check if the default post with the fields of delivery are return correctly and if the this hold also for return fields 
+        // So when you send a POST request with CustomerSocialNumber, RegistrationNumber,KilometersAtDeliveryTime, VehicleCategory
+        // then the id,DateOfDelivery are initialized by its own with a "Guid Id" and the "DateTime.Now" respectively. The
+        // KilometersAtReturn are initialized equals to KilometersAtReturnTime the DateOfReturn is initialized equal to the
+        // DateOfDelivery. The Price is initialized to zero and the isReturned equal to false.
+        [Fact]
+        public async void CheckPost()
+        {
+            CarRentalRegistration senditem = new CarRentalRegistration
+            {
+                CustomerSocSecNum = customersocsecnum4,
+                RegistrNum = registrnum4,
+                KmAtDelivery = kmatdelivery4,
+                VehicleCat = vehiclecat4,
+
+            };
+            
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            var result = await controller.PostCarRentalRegistration(senditem);
+            CarRentalRegistration resultitem = (result.Result as CreatedAtActionResult).Value as CarRentalRegistration;
+
+
+            Assert.NotNull(resultitem);
+            Assert.Equal(customersocsecnum4, resultitem.CustomerSocSecNum);
+            Assert.Equal(registrnum4, resultitem.RegistrNum);
+            Assert.Equal(kmatdelivery4, resultitem.KmAtDelivery);
+            Assert.Equal(vehiclecat4, resultitem.VehicleCat);
+            Assert.Equal(resultitem.DateOfDeli, resultitem.DateOfReturn);
+            Assert.Equal(0, resultitem.Price);
+            Assert.False(resultitem.IsReturned);
+
+        }
+
+        //Check the PUT 
+        [Fact]
+        public async void CheckPUT()
+        {
+            CarRentalRegistration senditem = new CarRentalRegistration
+            {
+                CustomerSocSecNum = customersocsecnum5,
+                RegistrNum = registrnum5,
+                KmAtDelivery = kmatdelivery5,
+                VehicleCat = vehiclecat5,
+
+            };
+
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            var result = await controller.PostCarRentalRegistration(senditem);
 
         }
 
