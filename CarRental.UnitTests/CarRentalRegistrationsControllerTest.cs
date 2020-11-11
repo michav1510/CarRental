@@ -118,58 +118,47 @@ namespace CarRental.UnitTests
 
         }
 
-        //[Fact]
-        //public async void CheckOfGetAll()
-        //{
-           
+        [Fact]
+        public async void CheckOfGetAll()
+        {
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            var result = await controller.GetCarRentalRegistrations();
 
+            var list = result.Value.ToList();
+            Assert.Equal(3,list.Count);
 
-        //    //create In Memory Database
-        //    var options = new DbContextOptionsBuilder<CarRentalContext>()
-        //    .UseInMemoryDatabase(databaseName: "TodoList")
-        //    .Options;
+            Assert.Equal(list[0].Id, id1);
+            Assert.Equal(list[0].CustomerSocSecNum, customersocsecnum1);
+            Assert.Equal(list[0].RegistrNum, registrnum1);
+            Assert.Equal(list[0].KmAtDelivery, kmatdelivery1);
+            Assert.Equal(list[0].VehicleCat, vehiclecat1);
+            Assert.Equal(list[0].KmAtReturn, kmatreturn1);
+            Assert.Equal(list[0].DateOfReturn, dateofreturn1);
+            Assert.Equal(list[0].Price, price1);
+            Assert.Equal(list[0].IsReturned, isreturned1);
 
-        //    //// Create mocked Context by seeding Data as per Schema///
+            Assert.Equal(list[1].Id, id2);
+            Assert.Equal(list[1].CustomerSocSecNum, customersocsecnum2);
+            Assert.Equal(list[1].RegistrNum, registrnum2);
+            Assert.Equal(list[1].KmAtDelivery, kmatdelivery2);
+            Assert.Equal(list[1].VehicleCat, vehiclecat2);
+            Assert.Equal(list[1].KmAtReturn, kmatreturn2);
+            Assert.Equal(list[1].DateOfReturn, dateofreturn2);
+            Assert.Equal(list[1].Price, price2);
+            Assert.Equal(list[1].IsReturned, isreturned2);
 
-        //    using (var context = new CarRentalContext(options))
-        //    {
-        //        context.CarRentalRegistrations.Add(carrent);
-        //        context.CarRentalRegistrations.Add(carrent1);
-        //        context.SaveChanges(); ;
-        //    }
+            Assert.Equal(list[2].Id, id3);
+            Assert.Equal(list[2].CustomerSocSecNum, customersocsecnum3);
+            Assert.Equal(list[2].RegistrNum, registrnum3);
+            Assert.Equal(list[2].KmAtDelivery, kmatdelivery3);
+            Assert.Equal(list[2].VehicleCat, vehiclecat3);
+            Assert.Equal(list[2].KmAtReturn, kmatreturn3);
+            Assert.Equal(list[2].DateOfReturn, dateofreturn3);
+            Assert.Equal(list[2].Price, price3);
+            Assert.Equal(list[2].IsReturned, isreturned3);
 
-        //    using (var context = new CarRentalContext(options))
-        //    {
-        //        CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
-        //        var result = await controller.GetCarRentalRegistrations();
-
-        //        var list = result.Value.ToList();
-        //        //Assert.Equal(2,list.Count);
-
-        //        Assert.Equal(list[0].Id, id);
-        //        Assert.Equal(list[0].CustomerSocSecNum, customersocsecnum);
-        //        Assert.Equal(list[0].RegistrNum, registrnum);
-        //        Assert.Equal(list[0].KmAtDelivery, kmatdelivery);
-        //        Assert.Equal(list[0].VehicleCat, vehiclecat);
-        //        Assert.Equal(list[0].KmAtReturn, kmatreturn);
-        //        Assert.Equal(list[0].DateOfReturn, dateofreturn);
-        //        Assert.Equal(list[0].Price, price);
-        //        Assert.Equal(list[0].IsReturned, isreturned);
-
-        //        Assert.Equal(list[1].Id, id1);
-        //        Assert.Equal(list[1].CustomerSocSecNum, customersocsecnum1);
-        //        Assert.Equal(list[1].RegistrNum, registrnum1);
-        //        Assert.Equal(list[1].KmAtDelivery, kmatdelivery1);
-        //        Assert.Equal(list[1].VehicleCat, vehiclecat1);
-        //        Assert.Equal(list[1].KmAtReturn, kmatreturn1);
-        //        Assert.Equal(list[1].DateOfReturn, dateofreturn1);
-        //        Assert.Equal(list[1].Price, price1);
-        //        Assert.Equal(list[1].IsReturned, isreturned1);
-
-        //    }
-
-        //}
-
+        }
 
     }
+
 }
