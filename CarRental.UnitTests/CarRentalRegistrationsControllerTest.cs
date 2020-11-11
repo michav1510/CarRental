@@ -81,6 +81,32 @@ namespace CarRental.UnitTests
         private static double price5 = 0;
         private static bool isreturned5 = false;
 
+        //sixth object, inside the db from start
+
+        private static Guid id6 = new Guid("66706c6a-6b87-666c-bfb6-61971b6d18ad");
+        private static long customersocsecnum6 = 6671100;
+        private static long registrnum6 = 160899001;
+        private static DateTime dateofdeli6 = DateTime.Now;
+        private static long kmatdelivery6 = 160000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat6 = CarRentalRegistration.VehicleCategory.HatchBack;
+        private static long kmatreturn6 = 160000;
+        private static DateTime dateofreturn6 = DateTime.Now;
+        private static double price6 = 0;
+        private static bool isreturned6 = false;
+
+        //seventh object, inside the db from start
+        private static Guid id7 = new Guid("32706c6a-6b87-666c-bfb6-61971b6d18ad");
+        private static long customersocsecnum7 = 6671100;
+        private static long registrnum7 = 160899001;
+        private static DateTime dateofdeli7 = DateTime.Now;
+        private static long kmatdelivery7 = 160000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat7 = CarRentalRegistration.VehicleCategory.Truck;
+        private static long kmatreturn7 = 160000;
+        private static DateTime dateofreturn7 = DateTime.Now;
+        private static double price7 = 0;
+        private static bool isreturned7 = false;
+
+
         static CarRentalRegistrationsControllerTest()
         {
             options = new DbContextOptionsBuilder<CarRentalContext>()
@@ -143,6 +169,34 @@ namespace CarRental.UnitTests
                 IsReturned = isreturned5
             });
 
+            context.CarRentalRegistrations.Add(new CarRentalRegistration
+            {
+                Id = id6,
+                CustomerSocSecNum = customersocsecnum6,
+                RegistrNum = registrnum6,
+                DateOfDeli = dateofdeli6,
+                KmAtDelivery = kmatdelivery6,
+                VehicleCat = vehiclecat6,
+                KmAtReturn = kmatreturn6,
+                DateOfReturn = dateofreturn6,
+                Price = price6,
+                IsReturned = isreturned6
+            });
+
+            context.CarRentalRegistrations.Add(new CarRentalRegistration
+            {
+                Id = id7,
+                CustomerSocSecNum = customersocsecnum7,
+                RegistrNum = registrnum7,
+                DateOfDeli = dateofdeli7,
+                KmAtDelivery = kmatdelivery7,
+                VehicleCat = vehiclecat7,
+                KmAtReturn = kmatreturn7,
+                DateOfReturn = dateofreturn7,
+                Price = price7,
+                IsReturned = isreturned7
+            });
+
             context.SaveChanges();
         }
       
@@ -172,7 +226,7 @@ namespace CarRental.UnitTests
             var result = await controller.GetCarRentalRegistrations();
 
             var list = result.Value.ToList();
-            Assert.Equal(4,list.Count);
+            Assert.Equal(6, list.Count);
 
             Assert.Equal(list[0].Id, id1);
             Assert.Equal(list[0].CustomerSocSecNum, customersocsecnum1);
@@ -240,14 +294,20 @@ namespace CarRental.UnitTests
         }
 
         //Check the PUT if it works well. We send a PUT request to an already existent CarRentalRegistration item and we 
-        //check if every field of the item is Ok. In this scenario we return a Small Car 2 days after a
-        [Fact]
-        public async void CheckPUT()
+        //check if every field of the item is Ok. In this scenario we return a Small Car. We can see that it is working
+        // for different numberofkilometers and number of days. Note that you can't comment out all the InlineData because
+        // the PUT request performed only once at a specific Id.
+        [Theory]
+        [InlineData(100, 2)]
+        //[InlineData(10000, 1)]
+        //[InlineData(5, 3)]
+        //[InlineData(0, 6)]
+        public async void CheckPUTSmallCar(int numberofkmafterthedelivery,int numberofdaysafter)
         {
-            int numberofkmafterthedelivery = 100;
-            int numberofdaysafter = 2;
-            CarRentalReturn carreturn = new CarRentalReturn {Id=id5, KmAtReturn = kmatreturn5+ numberofkmafterthedelivery,
-                                                             DateOfReturn= dateofdeli5.AddDays(numberofdaysafter) };
+            long kilometersofreturn = kmatreturn5 + numberofkmafterthedelivery;
+            DateTime dateofreturn = dateofdeli5.AddDays(numberofdaysafter);
+            CarRentalReturn carreturn = new CarRentalReturn {Id=id5, KmAtReturn = kilometersofreturn,
+                                                             DateOfReturn= dateofreturn};
 
             CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
             await controller.PutCarRentalRegistration(id5, carreturn);
@@ -259,11 +319,92 @@ namespace CarRental.UnitTests
             Assert.Equal(registrnum5, result.Value.RegistrNum);
             Assert.Equal(kmatdelivery5, result.Value.KmAtDelivery);
             Assert.Equal(vehiclecat5, result.Value.VehicleCat);
-            Assert.Equal(kmatreturn5 + numberofkmafterthedelivery, result.Value.KmAtReturn);
-            Assert.Equal(dateofdeli5.AddDays(numberofdaysafter), result.Value.DateOfReturn);
-            Assert.Equal(CarRentalRegistration.baseHourRent*2, result.Value.Price);
+            Assert.Equal(kilometersofreturn, result.Value.KmAtReturn);
+            Assert.Equal(dateofreturn, result.Value.DateOfReturn);
+            Assert.Equal(CarRentalRegistration.baseHourRent* numberofdaysafter, result.Value.Price);
             Assert.True(result.Value.IsReturned);
         }
+
+
+        //Check the PUT if it works well. We send a PUT request to an already existent CarRentalRegistration item and we 
+        //check if every field of the item is Ok. In this scenario we return a Hatchback.  We can see that it is working
+        // for different numberofkilometers and number of days. Note that you can't comment out all the InlineData because
+        // the PUT request performed only once at a specific Id.
+        [Theory]
+        //[InlineData(100, 2)]
+        //[InlineData(10000, 1)]
+        //[InlineData(5, 3)]
+        [InlineData(0, 6)]
+        public async void CheckPUTHatchBack(int numberofkmafterthedelivery, int numberofdaysafter)
+        {
+            long kilometersofreturn = kmatreturn6 + numberofkmafterthedelivery;
+            DateTime dateofreturn = dateofdeli6.AddDays(numberofdaysafter);
+            CarRentalReturn carreturn = new CarRentalReturn
+            {
+                Id = id6,
+                KmAtReturn = kilometersofreturn,
+                DateOfReturn = dateofreturn
+            };
+
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            await controller.PutCarRentalRegistration(id6, carreturn);
+
+            var result = await controller.GetCarRentalRegistration(id6);
+
+            Assert.Equal(id6, result.Value.Id);
+            Assert.Equal(customersocsecnum6, result.Value.CustomerSocSecNum);
+            Assert.Equal(registrnum6, result.Value.RegistrNum);
+            Assert.Equal(kmatdelivery6, result.Value.KmAtDelivery);
+            Assert.Equal(vehiclecat6, result.Value.VehicleCat);
+            Assert.Equal(kilometersofreturn, result.Value.KmAtReturn);
+            Assert.Equal(dateofreturn, result.Value.DateOfReturn);
+            TimeSpan difference = result.Value.DateOfReturn - result.Value.DateOfDeli;
+            var diff_days =  difference.Days;
+            Assert.Equal(CarRentalRegistration.baseHourRent * diff_days * CarRentalRegistration.hatchbackCoeffOfDays
+                          + CarRentalRegistration.baseKmPrice * numberofkmafterthedelivery, result.Value.Price);
+            Assert.True(result.Value.IsReturned);
+        }
+
+
+        //Check the PUT if it works well. We send a PUT request to an already existent CarRentalRegistration item and we 
+        //check if every field of the item is Ok. In this scenario we return a Truck.  We can see that it is working
+        // for different numberofkilometers and number of days. Note that you can't comment out all the InlineData because
+        // the PUT request performed only once at a specific Id.
+        [Theory]
+        //[InlineData(100, 2)]
+        //[InlineData(10000, 1)]
+        //[InlineData(5, 3)]
+        [InlineData(0, 7)]
+        public async void CheckPUTTruck(int numberofkmafterthedelivery, int numberofdaysafter)
+        {
+            long kilometersofreturn = kmatreturn7 + numberofkmafterthedelivery;
+            DateTime dateofreturn = dateofdeli7.AddDays(numberofdaysafter);
+            CarRentalReturn carreturn = new CarRentalReturn
+            {
+                Id = id7,
+                KmAtReturn = kilometersofreturn,
+                DateOfReturn = dateofreturn
+            };
+
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            await controller.PutCarRentalRegistration(id7, carreturn);
+
+            var result = await controller.GetCarRentalRegistration(id7);
+
+            Assert.Equal(id7, result.Value.Id);
+            Assert.Equal(customersocsecnum7, result.Value.CustomerSocSecNum);
+            Assert.Equal(registrnum7, result.Value.RegistrNum);
+            Assert.Equal(kmatdelivery7, result.Value.KmAtDelivery);
+            Assert.Equal(vehiclecat7, result.Value.VehicleCat);
+            Assert.Equal(kilometersofreturn, result.Value.KmAtReturn);
+            Assert.Equal(dateofreturn, result.Value.DateOfReturn);
+            TimeSpan difference = result.Value.DateOfReturn - result.Value.DateOfDeli;
+            var diff_days = difference.Days;
+            Assert.Equal(CarRentalRegistration.baseHourRent * diff_days * CarRentalRegistration.truckCoefOfDays
+                          + CarRentalRegistration.baseKmPrice * numberofkmafterthedelivery*CarRentalRegistration.truckCoefOfKm, result.Value.Price);
+            Assert.True(result.Value.IsReturned);
+        }
+
 
     }
 
