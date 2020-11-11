@@ -5,8 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using CarRental.Models;
-using CarRental.Contracts;
-using CarRental.Repos;
+
 
 namespace CarRental
 {
@@ -23,7 +22,6 @@ namespace CarRental
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CarRentalContext>(opt =>opt.UseInMemoryDatabase("TodoList"));
-            services.AddScoped<ICarRentalRegistrationRepository, CarRentalRegistrationRepository>();
             services.AddControllers();
         }
 

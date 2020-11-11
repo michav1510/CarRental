@@ -2,7 +2,6 @@ using Xunit;
 using CarRental.Controllers;
 using CarRental.Models;
 using Moq;
-using CarRental.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Microsoft.EntityFrameworkCore;
