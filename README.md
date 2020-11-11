@@ -2,6 +2,8 @@
 
 This is a rest API using **ASP.Net Core 3.1**.
 
+## In a few words
+
 This API simulates basic tasks of a car rental shop.
 
 There are two basic tasks:
@@ -23,7 +25,10 @@ About the return of the car to the car rental shop the details recorded are the 
 * Date and time of return : In combination with date and time of delivery, it is usefull to calculate charges.
 * Current meter position on the car (km) at return time: As the date and time this is also usefull to calculate charges.
 
-I modeled the above tasks with one class that have all the informations above. 
+## Implementation
+I modeled the 
 
+
+## Example of usage
 
 
