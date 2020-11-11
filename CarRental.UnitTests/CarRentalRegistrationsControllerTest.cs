@@ -76,10 +76,10 @@ namespace CarRental.UnitTests
         private static DateTime dateofdeli5 = DateTime.Now;
         private static long kmatdelivery5 = 150000;
         private static CarRentalRegistration.VehicleCategory vehiclecat5 = CarRentalRegistration.VehicleCategory.SmallCar;
-        private static long kmatreturn5 = 150200;
+        private static long kmatreturn5 = 150000;
         private static DateTime dateofreturn5 = DateTime.Now;
-        private static double price5 = 100;
-        private static bool isreturned5 = true;
+        private static double price5 = 0;
+        private static bool isreturned5 = false;
 
         static CarRentalRegistrationsControllerTest()
         {
@@ -128,7 +128,21 @@ namespace CarRental.UnitTests
                 Price = price3,
                 IsReturned = isreturned3
             });
-          
+
+            context.CarRentalRegistrations.Add(new CarRentalRegistration
+            {
+                Id = id5,
+                CustomerSocSecNum = customersocsecnum5,
+                RegistrNum = registrnum5,
+                DateOfDeli = dateofdeli5,
+                KmAtDelivery = kmatdelivery5,
+                VehicleCat = vehiclecat5,
+                KmAtReturn = kmatreturn5,
+                DateOfReturn = dateofreturn5,
+                Price = price5,
+                IsReturned = isreturned5
+            });
+
             context.SaveChanges();
         }
       
@@ -158,7 +172,7 @@ namespace CarRental.UnitTests
             var result = await controller.GetCarRentalRegistrations();
 
             var list = result.Value.ToList();
-            Assert.Equal(3,list.Count);
+            Assert.Equal(4,list.Count);
 
             Assert.Equal(list[0].Id, id1);
             Assert.Equal(list[0].CustomerSocSecNum, customersocsecnum1);
@@ -225,22 +239,30 @@ namespace CarRental.UnitTests
 
         }
 
-        //Check the PUT 
+        //Check the PUT if it works well. We send a PUT request to an already existent CarRentalRegistration item and we 
+        //check if every field of the item is Ok. In this scenario we return a Small Car 2 days after a
         [Fact]
         public async void CheckPUT()
         {
-            CarRentalRegistration senditem = new CarRentalRegistration
-            {
-                CustomerSocSecNum = customersocsecnum5,
-                RegistrNum = registrnum5,
-                KmAtDelivery = kmatdelivery5,
-                VehicleCat = vehiclecat5,
-
-            };
+            int numberofkmafterthedelivery = 100;
+            int numberofdaysafter = 2;
+            CarRentalReturn carreturn = new CarRentalReturn {Id=id5, KmAtReturn = kmatreturn5+ numberofkmafterthedelivery,
+                                                             DateOfReturn= dateofdeli5.AddDays(numberofdaysafter) };
 
             CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
-            var result = await controller.PostCarRentalRegistration(senditem);
+            await controller.PutCarRentalRegistration(id5, carreturn);
 
+            var result = await controller.GetCarRentalRegistration(id5);
+
+            Assert.Equal(id5,result.Value.Id);
+            Assert.Equal(customersocsecnum5, result.Value.CustomerSocSecNum);
+            Assert.Equal(registrnum5, result.Value.RegistrNum);
+            Assert.Equal(kmatdelivery5, result.Value.KmAtDelivery);
+            Assert.Equal(vehiclecat5, result.Value.VehicleCat);
+            Assert.Equal(kmatreturn5 + numberofkmafterthedelivery, result.Value.KmAtReturn);
+            Assert.Equal(dateofdeli5.AddDays(numberofdaysafter), result.Value.DateOfReturn);
+            Assert.Equal(CarRentalRegistration.baseHourRent*2, result.Value.Price);
+            Assert.True(result.Value.IsReturned);
         }
 
     }

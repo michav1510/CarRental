@@ -56,11 +56,11 @@ namespace CarRental.Models
             IsReturned = carrentalregistration.IsReturned;
         }
 
-        private double baseHourRent = 20;
-        private double baseKmPrice = 2;
-        private double hatchbackCoeffOfDays = 1.3;
-        private double truckCoefOfDays = 1.5;
-        private double truckCoefOfKm = 1.5;
+        public static double baseHourRent = 20;
+        public static double baseKmPrice = 2;
+        public static double hatchbackCoeffOfDays = 1.3;
+        public static double truckCoefOfDays = 1.5;
+        public static double truckCoefOfKm = 1.5;
         public double CalculatePrice()
         {
             if (VehicleCat == VehicleCategory.SmallCar)
