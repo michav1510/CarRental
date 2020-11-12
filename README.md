@@ -17,8 +17,8 @@ uniquely the delivery of the car.
 * Registration Number : This is the registration number of the customer in the car rental shop.
 * Customer's Social Security Number : It is needed for the rental of the car.
 * Vehicle category : There are, currently, three types of cars(**Small Car, Hatchback, Truck**). 
-* Date and time of delivery : The current date and time is mandatory to calculate the charges of the car rental.
-* Current meter position on the car (km) at delivery time: It is also mandatory to calculate the charges for some types of cars.
+* Date and time of delivery : The current date and time is used to calculate the charges of the car rental.
+* Current meter position on the car (km) at delivery time: It is also used to calculate the charges for some types of cars.
 
 About the return of the car to the car rental shop the details recorded are the following:
 * Id : The Id is the same with the deliverys Id.
@@ -31,7 +31,7 @@ I implement the above tasks with one class with name : **CarRentalRegistration**
 This class has as member variables the following: 
 * ```public Guid Id { get; set; }```
 
-The unique identifier of the car rental. It holds for both the delivery of the car and the return. It is like a reservation
+The unique identifier of the car rental registration. It holds for both the delivery of the car and the return. It is like a reservation
 number for a round trip.
 * ```public long RegistrNum { get; set; }```
 
@@ -57,13 +57,13 @@ and you have also to set the formula of the payment and the new category is read
 The date and time of the delivery of the car to the customer.
 * ```public long KmAtDelivery { get; set; }```
 
-The meter position of the car at the delivery time of the car to the customer.
+The meter position of the car, at the delivery time, to the customer.
 * ```public DateTime DateOfReturn { get; set; }```
 
-The date and time of the return of the car to the car rental shop. 
+The date and time of the return of the car by the customer. 
 * ```public long KmAtReturn { get; set; }```
 
-The meter position of the car at the return time of the car to the car rental shop.
+The meter position of the car at the return time of the car by the customer.
 * ```public double Price { get; set; }```
 
 The price paid by the customer το the car rental shop when returns the car.
@@ -71,7 +71,7 @@ The price paid by the customer το the car rental shop when returns the car.
 
 This is an auxiliary variable. It is set as true when the car has returned by the customer, otherwise it is false.
 
-About the ```CarRentalReturn``` class. It is an auxiliary class and it's member variables are a subset of the member variables of the class **CarRentalRegistration**.  It is used to model the json send with ```PUT``` request.
+About the ```CarRentalReturn``` class. It is an auxiliary class and its member variables are a subset of the member variables of the class **CarRentalRegistration**.  It is used to model the json send with ```PUT``` request.
 
 ## Example of usage
 * Scenario 1 : Customer goes to the car rental shop and asks for a car. The car rental owner asks the client for credentials,
