@@ -101,7 +101,7 @@ namespace CarRental.Controllers
         {
             _context.CarRentalRegistrations.Add(carRentalRegistration);
             await _context.SaveChangesAsync();
-
+           
             //return CreatedAtAction("GetCarRentalRegistration", new { id = carRentalRegistration.Id }, carRentalRegistration);
             return CreatedAtAction(nameof(GetCarRentalRegistration), new { id = carRentalRegistration.Id }, carRentalRegistration);
 
@@ -109,7 +109,7 @@ namespace CarRental.Controllers
 
         // DELETE: api/CarRentalRegistrations/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CarRentalRegistration>> DeleteCarRentalRegistration(long id)
+        public async Task<ActionResult<CarRentalRegistration>> DeleteCarRentalRegistration(Guid id)
         {
             var carRentalRegistration = await _context.CarRentalRegistrations.FindAsync(id);
             if (carRentalRegistration == null)

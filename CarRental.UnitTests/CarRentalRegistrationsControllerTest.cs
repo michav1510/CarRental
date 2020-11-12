@@ -158,6 +158,19 @@ namespace CarRental.UnitTests
         private static double price11 = 0;
         private static bool isreturned11 = false;
 
+        //Twelfth object, inside the db from start
+
+        private static Guid id12 = new Guid("99806c6a-6b88-666c-bfb6-61981b6d18ad");
+        private static long customersocsecnum12 = 66121210;
+        private static long registrnum12 = 160121212001;
+        private static DateTime dateofdeli12 = DateTime.Now;
+        private static long kmatdelivery12 = 160000;
+        private static CarRentalRegistration.VehicleCategory vehiclecat12 = CarRentalRegistration.VehicleCategory.SmallCar;
+        private static long kmatreturn12 = 160000;
+        private static DateTime dateofreturn12 = DateTime.Now;
+        private static double price12 = 0;
+        private static bool isreturned12 = false;
+
 
         static CarRentalRegistrationsControllerTest()
         {
@@ -305,6 +318,19 @@ namespace CarRental.UnitTests
                 IsReturned = isreturned11
             });
 
+            context.CarRentalRegistrations.Add(new CarRentalRegistration
+            {
+                Id = id12,
+                CustomerSocSecNum = customersocsecnum12,
+                RegistrNum = registrnum12,
+                DateOfDeli = dateofdeli12,
+                KmAtDelivery = kmatdelivery12,
+                VehicleCat = vehiclecat12,
+                KmAtReturn = kmatreturn12,
+                DateOfReturn = dateofreturn12,
+                Price = price12,
+                IsReturned = isreturned12
+            });
 
             context.SaveChanges();
         }
@@ -335,7 +361,7 @@ namespace CarRental.UnitTests
             var result = await controller.GetCarRentalRegistrations();
 
             var list = result.Value.ToList();
-            Assert.Equal(10, list.Count);
+            Assert.Equal(11, list.Count);
 
             Assert.Equal(list[0].Id, id1);
             Assert.Equal(list[0].CustomerSocSecNum, customersocsecnum1);
@@ -604,6 +630,26 @@ namespace CarRental.UnitTests
             Assert.Equal(resultitem.Value, CarRentalRegistrationsController.error_id_different_in_url_and_in_json);
 
         }
+
+        //Check if the delete works fine 
+        [Fact]
+        public async void CheckDeleteWithId()
+        {
+            CarRentalRegistrationsController controller = new CarRentalRegistrationsController(context);
+            var result = await controller.DeleteCarRentalRegistration(id12);
+
+            Assert.Equal(result.Value.Id, id12);
+            Assert.Equal(result.Value.CustomerSocSecNum, customersocsecnum12);
+            Assert.Equal(result.Value.RegistrNum, registrnum12);
+            Assert.Equal(result.Value.KmAtDelivery, kmatdelivery12);
+            Assert.Equal(result.Value.VehicleCat, vehiclecat12);
+            Assert.Equal(result.Value.KmAtReturn, kmatreturn12);
+            Assert.Equal(result.Value.DateOfReturn, dateofreturn12);
+            Assert.Equal(result.Value.Price, price12);
+            Assert.Equal(result.Value.IsReturned, isreturned12);
+
+        }
+
     }
 
 }
