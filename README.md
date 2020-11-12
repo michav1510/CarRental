@@ -137,7 +137,7 @@ So the ```id``` is the one that the customer tell the owner, the ```dateOfReturn
 ```
 Where you can see the ```price``` of the transaction and that now the ```isReturned``` is ```true```.
 
- * Scenario 6 : If you want to cancel a car rental, you send a ```PUT``` request like the scenario 5 and set the ```dateOfReturn``` equals to the ```dateOfDeli``` and the ```kmAtDelivery``` equals to the ```kmAtReturn```. Then the price is zero and the whole car rental registration state is correct.
+ * Scenario 6 : If you want to cancel a car rental, you send a ```PUT``` request like the scenario 5 and set the ```dateOfReturn``` equals to the ```dateOfDeli``` and the ```kmAtReturn``` equals to the ```kmAtDelivery```. Then the price is zero and the whole car rental registration state is correct.
 
 * Exceptional scenario 1 : When the customer return the car to the owner, the owner by mistake types another reservation number(id) that corresponds to a previously returned car. Then the ```PUT``` request of the scenario 5 will receive a ```BadRequest``` as a result with the messsage ```The car has been returned before!```.
 
