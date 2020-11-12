@@ -57,7 +57,18 @@ and you have also to set the formula of the payment and the new category is read
 The date and time of the delivery of the car to the customer.
 * ```public long KmAtDelivery { get; set; }```
 
-The meter position of the car at the delivery time
+The meter position of the car at the delivery time of the car to the customer.
+* ```public DateTime DateOfReturn { get; set; }```
+
+The date and time of the return of the car to the car rental shop. 
+* ```public long KmAtReturn { get; set; }```
+
+The meter position of the car at the return time of the car to the car rental shop.
+* ```public double Price { get; set; }```
+
+The price paid by the customer το the car rental shop when returns the car.
+* ```public bool IsReturned { get; set; } ```
+This is an auxiliary variable. It is set as true when the car has returned by the customer, otherwise it is false.
 ## Example of usage
 ## Tests 
 
