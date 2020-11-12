@@ -27,6 +27,7 @@ About the return of the car to the car rental shop the details recorded are the 
 
 ## Implementation
 I implement the above tasks with one class with name : **CarRentalRegistration**.
+
 This class has as member variables the following: 
 * ```public Guid Id { get; set; }```
 
@@ -139,4 +140,5 @@ Where you can see the ```price``` of the transaction and that now the ```isRetur
 The tests are inside the ```CarRental.UnitTests```. The tests reproduce all the scenarios above and the check all the request, i.e ```GET``` with or with not id given in the url,```POST```,```PUT```.
 
 If you want to run the tests you can open a terminal go to the ```CarRental.UnitTests``` folder and type : 
+
 ```>>dotnet test```
