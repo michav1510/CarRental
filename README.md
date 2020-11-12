@@ -136,4 +136,7 @@ Where you can see the ```price``` of the transaction and that now the ```isRetur
 * Exceptional technical scenario 1 : When the ```id``` of the ```PUT``` request and the ```id``` inside the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` are different then the scenario 2 will receive a ```BadRequest``` as a result with message ```The reservation number implicit given in url is different than the one in the json```
  
  ## Tests 
+The tests are inside the ```CarRental.UnitTests```. The tests reproduce all the scenarios above and the check all the request, i.e ```GET``` with or with not id given in the url,```POST```,```PUT```.
 
+If you want to run the tests you can open a terminal go to the ```CarRental.UnitTests``` folder and type : 
+```>>dotnet test```
