@@ -70,6 +70,9 @@ The price paid by the customer το the car rental shop when returns the car.
 * ```public bool IsReturned { get; set; } ```
 
 This is an auxiliary variable. It is set as true when the car has returned by the customer, otherwise it is false.
+
+About the ```CarRentalReturn``` class. It is an auxiliary class and it's member variables are a subset of the member variables of the class **CarRentalRegistration**.  It is used to model the json send with ```PUT``` request.
+
 ## Example of usage
 * Scenario 1 : Customer goes to the car rental shop and asks for a car. The car rental owner asks the client for credentials,
 i.e. the social security number and the registration number, and also about what type of car he/she wants. The car rental owner
