@@ -102,7 +102,15 @@ This json shows the ```id``` of the reservation produced, the ```dateOfDeli``` w
 set the same as the ```dateOfDeli```, the ```kmAtReturn``` and ```price``` is set as zero and the ```isReturned``` is set as false.
 
 * Scenario 2 : Customer returns the car to the car rental shop. The owner checks the current meter position and asks the reservation number(id) and the customer pays.
-This scenario is a ```PUT``` request with url 
+This scenario is a ```PUT``` request with url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` and the following json example : 
+```
+{
+    "id": "5bab39fd-14cf-4aa3-982b-70fc45cf7aa1",
+    "dateOfReturn": "2020-11-13T09:45:25.8695752+02:00",
+    "kmAtReturn": 151100
+}
+```
+So the ```id``` is the one that the customer tell the owner, the ```dateOfReturn``` is the date of return and  ```kmAtReturn``` is the meter position of the car at the return. In order to know price you make a ```GET``` request to the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` and you will 
 
 ## Tests 
 
