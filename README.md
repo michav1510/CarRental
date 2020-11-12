@@ -105,7 +105,13 @@ The json answer to the above ```POST``` request is the following :
 This json shows the ```id``` of the reservation produced, the ```dateOfDeli``` which is the time of the request sent, the ```dateOfReturn``` is
 set the same as the ```dateOfDeli```, the ```kmAtReturn``` and ```price``` is set as zero and the ```isReturned``` is set as false.
 
-* Scenario 2 : Customer returns the car to the car rental shop. The owner checks the current meter position and asks the reservation number(id) and the customer pays.
+* Scenario 1 : The owner wants to see all the car rental registrations, the car which are not yet returned and the car has been returned from the day one of the car rental shop. This is done with a ```GET``` request to the ```https://localhost:<port>/api/CarRentalRegistrations/```.
+
+* Scenario 2 : The owner wants to see a specific car rental registration with a specific id. This is done with a ```GET``` request to the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>```.
+
+* Scenario 3 : The ownew wants to delete a car rental registration with a specific id. This is done with a ```DELETE``` request to the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>```.
+
+* Scenario 4 : Customer returns the car to the car rental shop. The owner checks the current meter position and asks the reservation number(id) and the customer pays.
 This scenario is a ```PUT``` request with url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` and the following json example : 
 ```
 {
@@ -131,15 +137,16 @@ So the ```id``` is the one that the customer tell the owner, the ```dateOfReturn
 ```
 Where you can see the ```price``` of the transaction and that now the ```isReturned``` is ```true```.
 
-* Exceptional case 1 : When the customer return the car to the owner, the owner by mistake types another reservation number(id) that corresponds to a previously returned car. Then the ```PUT``` request of the scenario 2 will receive a ```BadRequest``` as a result with the messsage ```The car has been returned before!```.
+ * Scenario 5 : If you want to cancel a car rental, you send a ```PUT``` request like the scenario 4 and set the ```dateOfReturn``` equals to the ```dateOfDeli``` and the ```kmAtDelivery``` equals to the ```kmAtReturn```. Then the price is zero and the whole car rental registration state is correct.
 
-* Exceptional case 2 : When the customer return the car to the owner, the owner by mistake types less kilometer position of the car and this position kilometer is smaller than the one had the car at the delivery time. Then the ```PUT``` request of the scenario 2 will receive ```BadRequest``` as a result with the messsage ```The kilometers at return can't be smaller than delivery time!```.
+* Exceptional scenario 1 : When the customer return the car to the owner, the owner by mistake types another reservation number(id) that corresponds to a previously returned car. Then the ```PUT``` request of the scenario 4 will receive a ```BadRequest``` as a result with the messsage ```The car has been returned before!```.
 
-* Exceptional case 3 : When the customer return the car to the owner, the owner by mistake types previous date than the delivery date. Then the ```PUT``` request of the scenario 2 will receive ```BadRequest``` as a result with the messsage ```The date of the return can't be previous than the delivery date!```.
+* Exceptional scenario 2 : When the customer return the car to the owner, the owner by mistake types less kilometer position of the car and this position kilometer is smaller than the one had the car at the delivery time. Then the ```PUT``` request of the scenario 4 will receive ```BadRequest``` as a result with the messsage ```The kilometers at return can't be smaller than delivery time!```.
 
-* Exceptional technical scenario 1 : When the ```id``` of the ```PUT``` request and the ```id``` inside the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` are different then the scenario 2 will receive a ```BadRequest``` as a result with message ```The reservation number implicit given in url is different than the one in the json```
+* Exceptional scenario 3 : When the customer return the car to the owner, the owner by mistake types previous date than the delivery date. Then the ```PUT``` request of the scenario 4 will receive ```BadRequest``` as a result with the messsage ```The date of the return can't be previous than the delivery date!```.
+
+* Exceptional (technical) scenario 4 : When the ```id``` of the ```PUT``` request and the ```id``` inside the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` are different then the scenario 4 will receive a ```BadRequest``` as a result with message ```The reservation number implicit given in url is different than the one in the json```
  
- * Technical scenario 1 : If you want to cancel a car rental, you send a ```PUT``` request like the scenario 2 and set the ```dateOfReturn``` equals to the ```dateOfDeli``` and the ```kmAtDelivery``` equals to the ```kmAtReturn```. Then the price is zero and all the car rental registration state is correct.
  
  ## Tests 
 The tests are inside the ```CarRental.UnitTests```. The tests reproduce all the scenarios above and the check all the request, i.e ```GET``` with or with not id given in the url,```POST```,```PUT``` and ```DELETE```. The tests are testing also if the prices are correct for the different types of car and for different rental days and kilometers.
