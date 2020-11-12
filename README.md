@@ -27,8 +27,7 @@ About the return of the car to the car rental shop the details recorded are the 
 
 ## Implementation
 I implement the above tasks with one class with name : **CarRentalRegistration**.
-This is because 
-This class has as member variables the following : 
+This class has as member variables the following: 
 * ```public Guid Id { get; set; }```
 
 The unique identifier of the car rental. It holds for both the delivery of the car and the return. It is like a reservation
@@ -68,7 +67,42 @@ The meter position of the car at the return time of the car to the car rental sh
 
 The price paid by the customer το the car rental shop when returns the car.
 * ```public bool IsReturned { get; set; } ```
+
 This is an auxiliary variable. It is set as true when the car has returned by the customer, otherwise it is false.
 ## Example of usage
+* Scenario 1 : Customer goes to the car rental shop and asks for a car. The car rental owner asks the client for credentials,
+i.e. the social security number and the registration number, and also about what type of car he/she wants. The car rental owner
+goes to the car and note the current kilometer position of the car and gives it to the customer. The aforementioned scenario is
+a ```POST``` request to the url ends with ```https://localhost:<port>/api/CarRentalRegistrations/``` with the following json example : 
+``` 
+ {
+        "registrNum": 435357435897,
+        "customerSocSecNum": 192083209,
+        "vehicleCat": 1,
+        "kmAtDelivery": 151000        
+}
+```
+
+The json answer to the above ```POST``` request is the following : 
+```
+{
+    "id": "5bab39fd-14cf-4aa3-982b-70fc45cf7aa1",
+    "registrNum": 435357435897,
+    "customerSocSecNum": 192083209,
+    "vehicleCat": 1,
+    "dateOfDeli": "2020-11-12T09:45:25.8695752+02:00",
+    "kmAtDelivery": 151000,
+    "dateOfReturn": "2020-11-12T09:45:25.8695752+02:00",
+    "kmAtReturn": 0,
+    "price": 0,
+    "isReturned": false
+}
+```
+This json shows the ```id``` of the reservation produced, the ```dateOfDeli``` which is the time of the request sent, the ```dateOfReturn``` is
+set the same as the ```dateOfDeli```, the ```kmAtReturn``` and ```price``` is set as zero and the ```isReturned``` is set as false.
+
+* Scenario 2 : Customer returns the car to the car rental shop. The owner checks the current meter position and asks the reservation number(id) and the customer pays.
+This scenario is a ```PUT``` request with url 
+
 ## Tests 
 
