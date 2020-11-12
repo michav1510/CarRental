@@ -30,13 +30,17 @@ I implement the above tasks with one class with name : **CarRentalRegistration**
 This is because 
 This class has as member variables the following : 
 * ```public Guid Id { get; set; }```
+
 The unique identifier of the car rental. It holds for both the delivery of the car and the return. It is like a reservation
 number for a round trip.
 * ```public long RegistrNum { get; set; }```
+
 This is the registration number of the customer.
 * ```public long CustomerSocSecNum { get; set; }```
+
 Customer's social security number.
 * ```public VehicleCategory VehicleCat { get; set; }```
+
 Category of vehicle i.e (**Small Car, Hatchback, Truck**) . Notice how the ```VehicleCategory``` is declared below : 
 ```public enum VehicleCategory
         {
@@ -45,11 +49,14 @@ Category of vehicle i.e (**Small Car, Hatchback, Truck**) . Notice how the ```Ve
             Truck = 3
         }
 ```
+
 So it is very easy to add another category of vehicle in the future if you want. You have to add another enumeration 
 and you have also to set the formula of the payment and the new category is ready.
 * ```public DateTime DateOfDeli { get; set; } ```
+
 The date and time of the delivery of the car to the customer.
 * ```public long KmAtDelivery { get; set; }```
+
 The meter position of the car at the delivery time
 ## Example of usage
 ## Tests 
