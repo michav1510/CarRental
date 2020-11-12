@@ -74,7 +74,13 @@ This is an auxiliary variable. It is set as true when the car has returned by th
 About the ```CarRentalReturn``` class. It is an auxiliary class and its member variables are a subset of the member variables of the class **CarRentalRegistration**.  It is used to model the json send with ```PUT``` request.
 
 ## Example of usage
-* Scenario 1 : Customer goes to the car rental shop and asks for a car. The car rental owner asks the client for credentials,
+* Scenario 1 : The owner wants to see all the car rental registrations, the car which are not yet returned and the cars has been returned from the day one of the car rental shop. This is done with a ```GET``` request to the ```https://localhost:<port>/api/CarRentalRegistrations/```.
+
+* Scenario 2 : The owner wants to see a specific car rental registration with a specific id. This is done with a ```GET``` request to the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>```.
+
+* Scenario 3 : The owner wants to delete a car rental registration with a specific id. This is done with a ```DELETE``` request to the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>```.
+
+* Scenario 4 : Customer goes to the car rental shop and asks for a car. The car rental owner asks the client for credentials,
 i.e. the social security number and the registration number, and also about what type of car he/she wants. The car rental owner
 goes to the car and note the current kilometer position of the car and gives it to the customer. The aforementioned scenario is
 a ```POST``` request to the url ends with ```https://localhost:<port>/api/CarRentalRegistrations/``` with the following json example : 
@@ -105,13 +111,7 @@ The json answer to the above ```POST``` request is the following :
 This json shows the ```id``` of the reservation produced, the ```dateOfDeli``` which is the time of the request sent, the ```dateOfReturn``` is
 set the same as the ```dateOfDeli```, the ```kmAtReturn``` and ```price``` is set as zero and the ```isReturned``` is set as false.
 
-* Scenario 1 : The owner wants to see all the car rental registrations, the car which are not yet returned and the car has been returned from the day one of the car rental shop. This is done with a ```GET``` request to the ```https://localhost:<port>/api/CarRentalRegistrations/```.
-
-* Scenario 2 : The owner wants to see a specific car rental registration with a specific id. This is done with a ```GET``` request to the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>```.
-
-* Scenario 3 : The ownew wants to delete a car rental registration with a specific id. This is done with a ```DELETE``` request to the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>```.
-
-* Scenario 4 : Customer returns the car to the car rental shop. The owner checks the current meter position and asks the reservation number(id) and the customer pays.
+* Scenario 5 : Customer returns the car to the car rental shop. The owner checks the current meter position and asks the reservation number(id) and the customer pays.
 This scenario is a ```PUT``` request with url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` and the following json example : 
 ```
 {
@@ -137,15 +137,15 @@ So the ```id``` is the one that the customer tell the owner, the ```dateOfReturn
 ```
 Where you can see the ```price``` of the transaction and that now the ```isReturned``` is ```true```.
 
- * Scenario 5 : If you want to cancel a car rental, you send a ```PUT``` request like the scenario 4 and set the ```dateOfReturn``` equals to the ```dateOfDeli``` and the ```kmAtDelivery``` equals to the ```kmAtReturn```. Then the price is zero and the whole car rental registration state is correct.
+ * Scenario 6 : If you want to cancel a car rental, you send a ```PUT``` request like the scenario 5 and set the ```dateOfReturn``` equals to the ```dateOfDeli``` and the ```kmAtDelivery``` equals to the ```kmAtReturn```. Then the price is zero and the whole car rental registration state is correct.
 
-* Exceptional scenario 1 : When the customer return the car to the owner, the owner by mistake types another reservation number(id) that corresponds to a previously returned car. Then the ```PUT``` request of the scenario 4 will receive a ```BadRequest``` as a result with the messsage ```The car has been returned before!```.
+* Exceptional scenario 1 : When the customer return the car to the owner, the owner by mistake types another reservation number(id) that corresponds to a previously returned car. Then the ```PUT``` request of the scenario 5 will receive a ```BadRequest``` as a result with the messsage ```The car has been returned before!```.
 
-* Exceptional scenario 2 : When the customer return the car to the owner, the owner by mistake types less kilometer position of the car and this position kilometer is smaller than the one had the car at the delivery time. Then the ```PUT``` request of the scenario 4 will receive ```BadRequest``` as a result with the messsage ```The kilometers at return can't be smaller than delivery time!```.
+* Exceptional scenario 2 : When the customer return the car to the owner, the owner by mistake types less kilometer position of the car and this position kilometer is smaller than the one had the car at the delivery time. Then the ```PUT``` request of the scenario 5 will receive ```BadRequest``` as a result with the messsage ```The kilometers at return can't be smaller than delivery time!```.
 
-* Exceptional scenario 3 : When the customer return the car to the owner, the owner by mistake types previous date than the delivery date. Then the ```PUT``` request of the scenario 4 will receive ```BadRequest``` as a result with the messsage ```The date of the return can't be previous than the delivery date!```.
+* Exceptional scenario 3 : When the customer return the car to the owner, the owner by mistake types previous date than the delivery date. Then the ```PUT``` request of the scenario 5 will receive ```BadRequest``` as a result with the messsage ```The date of the return can't be previous than the delivery date!```.
 
-* Exceptional (technical) scenario 4 : When the ```id``` of the ```PUT``` request and the ```id``` inside the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` are different then the scenario 4 will receive a ```BadRequest``` as a result with message ```The reservation number implicit given in url is different than the one in the json```
+* Exceptional (technical) scenario 1 : When the ```id``` of the ```PUT``` request and the ```id``` inside the url ```https://localhost:<port>/api/CarRentalRegistrations/<id>``` are different then the scenario 5 will receive a ```BadRequest``` as a result with message ```The reservation number implicit given in url is different than the one in the json```
  
  
  ## Tests 
