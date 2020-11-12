@@ -361,7 +361,7 @@ namespace CarRental.UnitTests
             var result = await controller.GetCarRentalRegistrations();
 
             var list = result.Value.ToList();
-            Assert.Equal(11, list.Count);
+            Assert.Equal(context.CarRentalRegistrations.Count(), list.Count);
 
             Assert.Equal(list[0].Id, id1);
             Assert.Equal(list[0].CustomerSocSecNum, customersocsecnum1);
